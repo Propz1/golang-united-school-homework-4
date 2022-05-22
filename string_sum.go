@@ -52,7 +52,7 @@ func StringSum(input string) (output string, err error) {
 
 	//is blank
 	if intput1 == "" {
-		err := fmt.Errorf("the string is empty: \"%w\"", errorEmptyInput)
+		err := fmt.Errorf("the string is blank: \"%w\"", errorEmptyInput)
 		return "", err
 	}
 
@@ -97,10 +97,9 @@ func StringSum(input string) (output string, err error) {
 					if n == 2 {
 						err := fmt.Errorf("two number successively without sign: \"%w\"", errorNotTwoOperands)
 						return "", err
-					} else {
-						err := fmt.Errorf("two number successively without sign")
-						return "", err
 					}
+					err := fmt.Errorf("two number successively without sign")
+					return "", err
 				}
 			}
 
@@ -143,14 +142,16 @@ func StringSum(input string) (output string, err error) {
 	for _, p := range stsplit {
 
 		i, err := strconv.Atoi(p)
+
 		if err != nil {
+
 			if n == 2 {
 				err := fmt.Errorf("\"%s\" symbol can't be converted to Int: \"%w\"", p, errorNotTwoOperands)
 				return "", err
-			} else {
-				err := fmt.Errorf("\"%s\" symbol can't be converted to Int", p)
-				return "", err
 			}
+
+			err := fmt.Errorf("\"%s\" symbol can't be converted to Int: \"%w\"", p, err)
+			return "", err
 		}
 
 		c++
