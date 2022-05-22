@@ -134,7 +134,7 @@ func TestSortMapValues(t *testing.T) {
 
 	})
 
-	t.Run("Negative_6", func(t *testing.T) {
+	t.Run("Negative_7", func(t *testing.T) {
 
 		var (
 			input  = "\t\t\t\t\n\n\n\n -               3569 + $   \t\t\t\n "
