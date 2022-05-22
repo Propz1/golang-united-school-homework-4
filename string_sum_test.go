@@ -152,4 +152,22 @@ func TestSortMapValues(t *testing.T) {
 
 	})
 
+	t.Run("Negative_8", func(t *testing.T) {
+
+		var (
+			input  = " -L + 3"
+			result = ""
+		)
+
+		realResult, err := StringSum(input)
+		if err != nil {
+			fmt.Printf("%s\n", err)
+		}
+
+		if realResult != result {
+			t.Errorf("Expected result %s != %s real result", result, realResult)
+		}
+
+	})
+
 }
