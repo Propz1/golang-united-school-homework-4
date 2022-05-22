@@ -26,8 +26,10 @@ var (
 	contains            bool
 	sum                 int
 	gap                 bool
+	st                  string
 
-	str     = make([]string, 0, 5)
+	str = make([]string, 0, 100)
+
 	builder strings.Builder
 )
 
@@ -42,6 +44,8 @@ var (
 // Use the errors defined above as described, again wrapping into fmt.Errorf
 
 func StringSum(input string) (output string, err error) {
+
+	str = nil
 
 	intput1 := strings.TrimSpace(input)
 
@@ -66,7 +70,11 @@ func StringSum(input string) (output string, err error) {
 			}
 
 			if value {
-				str = append(str, ";", symbol)
+				if len(str) > 0 {
+					str = append(str, ";", symbol)
+				} else {
+					str = append(str, symbol)
+				}
 			} else {
 				str = append(str, symbol)
 			}
@@ -114,39 +122,50 @@ func StringSum(input string) (output string, err error) {
 
 	}
 
+	builder.Reset()
+
 	for _, w := range str {
 		builder.WriteString(w)
 	}
 
-	st := builder.String()
+	st = builder.String()
 
 	stsplit := strings.Split(st, ";")
 
-	с := 0
+	c := 0
 
 	for _, p := range stsplit {
-		fmt.Println(p)
+
 		i, err := strconv.Atoi(p)
 		if err != nil {
 			if n == 2 {
 				err := fmt.Errorf("\"%s\" symbol can't be converted to Int: \"%w\"", p, errorNotTwoOperands)
 				return "", err
 			} else {
-				panic(err)
+				err := fmt.Errorf("\"%s\" symbol can't be converted to Int", p)
+				return "", err
 			}
 
 		}
 
-		с++
+		c++
 		sum += i
 	}
 
-	if с == 1 {
+	if c == 1 {
+		if n == 2 {
+			err := fmt.Errorf("the string contains only one numbers \"%s\": \"%w\"", strconv.Itoa(sum), errorNotTwoOperands)
+			return "", err
+		}
 		err := fmt.Errorf("the string contains only one numbers \"%s\"", strconv.Itoa(sum))
 		return "", err
 	}
 
-	if с > n {
+	if c > n {
+		if n == 2 {
+			err := fmt.Errorf("the string contains more than %s numbers: %w", strconv.Itoa(n), errorNotTwoOperands)
+			return "", err
+		}
 		err := fmt.Errorf("the string contains more than %s numbers", strconv.Itoa(n))
 		return "", err
 	}
