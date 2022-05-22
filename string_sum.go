@@ -46,12 +46,13 @@ var (
 func StringSum(input string) (output string, err error) {
 
 	str = nil
+	sum = 0
 
 	intput1 := strings.TrimSpace(input)
 
 	//is blank
 	if intput1 == "" {
-		err := fmt.Errorf("the string is blank: \"%w\"", errorEmptyInput)
+		err := fmt.Errorf("the string is empty: \"%w\"", errorEmptyInput)
 		return "", err
 	}
 
@@ -64,9 +65,11 @@ func StringSum(input string) (output string, err error) {
 		if symbol == plus || symbol == minus {
 
 			if sign {
-				prev_sign := str[len(str)-1]
-				err := fmt.Errorf("two signs %s successively", "\""+prev_sign+symbol+"\"")
-				return "", err
+				if len(str) > 0 {
+					prev_sign := str[len(str)-1]
+					err := fmt.Errorf("two signs %s successively", "\""+prev_sign+symbol+"\"")
+					return "", err
+				}
 			}
 
 			if value {
@@ -88,7 +91,6 @@ func StringSum(input string) (output string, err error) {
 		if contains {
 
 			if len(str) > 0 {
-
 				pre_simbol := str[len(str)-1]
 
 				if pre_simbol != plus && pre_simbol != minus && gap {
@@ -145,7 +147,6 @@ func StringSum(input string) (output string, err error) {
 				err := fmt.Errorf("\"%s\" symbol can't be converted to Int", p)
 				return "", err
 			}
-
 		}
 
 		c++
