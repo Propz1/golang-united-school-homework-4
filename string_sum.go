@@ -118,8 +118,12 @@ func StringSum(input string) (output string, err error) {
 		}
 
 		if symbol != plus && symbol != minus && symbol != blank && !contains {
-			err := fmt.Errorf("\"%s\" is invalid character", string(r))
+
+			_, e := strconv.Atoi(symbol)
+
+			err := fmt.Errorf("\"%s\" is invalid character: %w", symbol, e)
 			return "", err
+
 		}
 
 	}
